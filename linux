@@ -1,4 +1,6 @@
-sudo apt install net-tools
+sudo useradd newuser        <-- to create user
+sudo passwd newuser         <-- to assign passowrd for new user
+netstat -tulpn              <-- tcp udp listening port numbers
 ifconfig -a                 <-- to check the ip address of machine
 telnet 192.168.16.2 443     <--to check the port is open or not in remort servers
 find / -type f -name        <--to serach for the file in /
@@ -6,9 +8,16 @@ rm -rf /var/lib/rpm/__db.[0-9][0-9]*   <-- delets __db.anysinglenumanysinglenum*
 ##export  //To make your local shell variables global automatically, export them in your ~/.profile or ~/.bash_profile file under Unix like operating systems
 ##unset PATH or VARIBLE
 export PATH=$PATH:/usr/local/bin:~/bin
+cat /etc/passwd            <--get user details
+cat /etc/shadow            <--get passwd details
 
 ## print verision of centos
-cat /etc/redhat-release | '{print $4}' | awk -F'.' '{print $1}'
+ls -la | awk '{print $2}'
+
+## sed
+sed -i -e "s/MEMORY_STORE_IP/10.61.199.44/g" /etc/php.ini               <-- replace MEMORY_STORE_IP
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/' test                   <-- repace SELINUX=enforcing
+
 
 ##To write content to a file
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
@@ -17,6 +26,7 @@ EOF
 
 ##To change pwenership like currunt user
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
+sudo chmod +x path_of_file
 
 ## SCP & SSH
 * ssh -i /var/lib/jenkins/workspace/id_rsa -oStrictHostKeyChecking=no siri@10.128.0.4 rm -rf /usr/share/nginx/html/index.html
@@ -31,9 +41,6 @@ if [ $(echo qa01 | cut -c 1-3) != "dev" -a $(echo qa01 | cut -c 1-2) != "qa" ]; 
     rm -rf /var/www/html/catch /var/www/html/*.conf
 fi
 
-## sed
-sed -i -e "s/MEMORY_STORE_IP/10.61.199.44/g" /etc/php.ini               <-- replace MEMORY_STORE_IP
-sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config  <-- repace SELINUX=enforcing
 
 ## tee
 packer build packer.json | tee packer.log
@@ -59,7 +66,7 @@ fi
 
 ## IPTABLE-redirect an incoming connection to a different IP address
 https://my.esecuredata.com/index.php?/knowledgebase/article/49/how-to-redirect-an-incoming-connection-to-a-different-ip-address-on-a-specific-port-using-iptables/
-iptables -t nat -A PREROUTING -p tcp --dport 3124 -j DNAT --to-destination 1.1.1.1:3000
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 1.1.1.1:8080
 iptables -t nat -A POSTROUTING -j MASQUERADE
 service iptables save
 
@@ -105,7 +112,16 @@ And so on.
 
 #Date format
 touch HtmlReport_$(date +%Y-%m-%d)
-zip -r HtmlReport_Jenkinsjob.zip HtmlReport_$(date +%Y-%m-%d)
+zip -r HtmlReport_Jenkinsjob.zip HtmlReport_$(date +%Y-%m-%d)  file1 file2    <-- to zip multipul files
+unzip filename.zip                  <-- to extract zip file
+
+tar -czvf archive.tar.gz file1 file2 directory  
+tar -xzvf archive.tar.gz            <--extract
+
+gzip filename
+gunzip filename.gz                  <--extract
+
+
 
 #latest created file or directory
 ls -t $directory_path | head -n1
