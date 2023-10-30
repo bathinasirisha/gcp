@@ -1,1 +1,133 @@
+telnet 192.168.16.2 443     <--to check the port is open or not in remort servers
+find / -type f -name        <--to serach for the file in /
+rm -rf /var/lib/rpm/__db.[0-9][0-9]*   <-- delets __db.anysinglenumanysinglenum*
+##export  //To make your local shell variables global automatically, export them in your ~/.profile or ~/.bash_profile file under Unix like operating systems
+##unset PATH or VARIBLE
+export PATH=$PATH:/usr/local/bin:~/bin
+
+## print verision of centos
+cat /etc/redhat-release | '{print $4}' | awk -F'.' '{print $1}'
+
+##To write content to a file
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+EOF
+
+##To change pwenership like currunt user
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+## SCP & SSH
+* ssh -i /var/lib/jenkins/workspace/id_rsa -oStrictHostKeyChecking=no siri@10.128.0.4 rm -rf /usr/share/nginx/html/index.html
+* scp -r -i id_rsa -P61854 /tmp/sugar.zip dev_bathinapullarao@153.146.159.201:/tmp
+* scp -r -i ~/.ssh/dev_chef01.pem /tmp/sugar.sql dev_ch01@dev-mcm-db04:/tmp
+* scp -i ~/.ssh/dev_chef01.pem dev_chef01@dev-db99:/tmp/* /home/dev_chef01/DB-BACKUP/
+## diff 
+// compare two files
+* diff -y /etc/my.cnf_20190107 /etc/my.cnf |grep "|"
+## IF
+if [ $(echo qa01 | cut -c 1-3) != "dev" -a $(echo qa01 | cut -c 1-2) != "qa" ]; then
+    rm -rf /var/www/html/catch /var/www/html/*.conf
+fi
+
+## sed
+sed -i -e "s/MEMORY_STORE_IP/10.61.199.44/g" /etc/php.ini               <-- replace MEMORY_STORE_IP
+sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config  <-- repace SELINUX=enforcing
+
+## tee
+packer build packer.json | tee packer.log
+
+## mount
+mount -t gcsfuse -o implicit_dirs,uid=48,gid=48,allow_other qa01-mcm-uploads /var/www/html/upload
+## umount
+sudo fusermount -u /var/www/html/upload
+## To relase the lisning port shown in netstat -tulpn
+fuser 8080/tcp                          <--will print you PID of process bound on that port
+fuser -k 8080/tcp                       <-- will kill that process
+
+# /etc/crontab
+echo "# Sugar Sucheduled JOB (D-106)" >> /etc/crontab
+echo "* * * * * apache cd /var/www/html; php -f cron.php > /dev/null 2>&1" >> /etc/crontab
+if [ $(grep "filename.sh" /etc/crontab 1>> /dev/null 2>> /dev/null; echo $?) != 0 ]; then
+    echo "# Discription" >> /etc/crontab
+    echo "* * * * * apache cd /usr/local/src; sh filename.sh > /dev/null 2>&1" >> /etc/crontab
+fi
+if [ $(grep pullarao /etc/passwd > /dev/null; echo $?) != 0 ]; then         ##if pullarao is there in passwd then exit status 0 else 1
+    useradd -m pullarao
+fi
+
+## IPTABLE-redirect an incoming connection to a different IP address
+https://my.esecuredata.com/index.php?/knowledgebase/article/49/how-to-redirect-an-incoming-connection-to-a-different-ip-address-on-a-specific-port-using-iptables/
+iptables -t nat -A PREROUTING -p tcp --dport 3124 -j DNAT --to-destination 1.1.1.1:3000
+iptables -t nat -A POSTROUTING -j MASQUERADE
+service iptables save
+
+# Routing table
+yum install net-tools   <--to work with network elated commands
+route -n
+netstat -rn
+route add -net 192.168.5.0 netmask 255.255.255.0 gw 192.168.0.1  eno16777
+route add -host 192.168.5.101 gw 192.168.5.1 eno1677
+route add -host 8.8.8.8 gw 192.168.5.1
+route del default gw 192.168.5.1
+route add default gw 192.168.5.1
+ps -aux | grep ssh
+ps –eaf      <--list all the running process inside a container.
+kill -9 pid
+kill pid
+mtr 8.8.8.8   <--mtr stands for my trace route  cttrl +c or q to stop display
+mtr google.com
+
+yum install nmap
+nmap foo.example.com <--tests the most common network communication ports for listening or waiting services.
+
+# NETMASK
+# IP	            NETMASK	         DESCRIPTION
+192.168.55.161	255.255.255.255	 Only applies to 192.168.55.161
+192.168.55.0	255.255.255.0	 Applies to IPs in the 192.168.55.0 - 192.168.55.255 range
+192.168.55.240	255.255.255.240	 192.168.55.240 - 192.168.55.255
+192.168.55.161	255.255.255.0	 192.168.55.0 - 192.168.55.255
+192.168.0.0	    255.255.0.0	     192.168.0.0 - 192.168.255.255
+
+Sometimes you will see that a Netmask is defined by one number, e.g., 24. This number is the length of the Netmask in bits:
+NETMASK	      255.	255.	255.	255
+Netmask length	8	16	    24	    32
+
+So, for example, a Netmask that is 24-bits long is 255.255.255.0:
+NETMASK	        255.	255.	255.	0
+Netmask length	8	    16	    24	    -
+
+A Netmask that is 16-bits long is 255.255.0.0:
+NETMASK	       255.	255.	0.	0
+Netmask length	8	16	    -	-
+And so on.
+
+#Date format
+touch HtmlReport_$(date +%Y-%m-%d)
+zip -r HtmlReport_Jenkinsjob.zip HtmlReport_$(date +%Y-%m-%d)
+
+#latest created file or directory
+ls -t $directory_path | head -n1
+
+mount
+create fstab like "dev-gcp-web01"
+/upload/upload                /var/www/html/upload    none    bind           0  0
+//mount /upload/upload to /var/www/html/upload
+mount -a
+
+aliveintervel
+vi /etc/ssh/sshd_config
+ClientAliveInterval  1200
+ClientAliveCountMax 3
+systemctl reload sshd
+
+#Firewall
+firewall-cmd --state           <-- shows firewall is running or not
+systemctl stop firewalld       <--current runtime session only.
+systemctl stop firewalld
+systemctl disable firewalld    <--perminently stop
+systemctl mask --now firewalld <--Mask the FirewallD service which will prevent the firewall from being started by other services
+systemctl disable cups         <--if there are no printers installed on your computer, disable the cups service
+
+#memory
+free -h                          <-- to check memory and swap -h humanredable
 
