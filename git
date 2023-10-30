@@ -1,11 +1,25 @@
-Ref:https://guides.github.com/features/mastering-markdown/   <-- to write .md files
-Ref:https://www.tutorialspoint.com/git/git_rename_operation.htm
-- file too long -execute below command in bash or modify config file
 #Git global setup
 git config --list
 git config --system core.longpaths true
 git config --global user.name "BathinaPullarao"
 git config --global user.email "bathina.pullarao@gmail.com"
+git config --global credential.helper store
+echo "https://username:yourtoken@github.com" > ~/.git-credentials
+
+git clone git@git
+cd gcm-uat
+git checkout branchname
+#git switch -c main
+touch README.md
+git add README.md
+git restore --staged <file>..." to unstage
+git commit -m "add README"
+git push -u origin branchname
+
+
+
+
+
 git config --global http.proxy 127.0.0.1:8087
 // To check if at least the clone works without checking said certificate, you can set:
 export GIT_SSL_NO_VERIFY=1
@@ -13,13 +27,6 @@ export GIT_SSL_NO_VERIFY=1
 git config --global http.sslverify false
 git rev-parse $(git log --oneline -n 1 . | cut -d " " -f 1) > a.txt   <--To get full commit id form short commit id
 #Create a new repository
-git clone git@git
-cd gcm-uat
-git switch -c main
-touch README.md
-git add README.md
-git commit -m "add README"
-git push -u origin main
 git branch -d <branch-name>    <--delete branch localy, If the branch contains unmerged changes, though, Git will refuse to delete it.
 git branch -D <branch-name>    <--force the deletion by replacing the -d parameter with an uppercase D:
 git push --delete <remote name> <branch name>  <--You don’t use the git branch command to delete a remote branch.
@@ -43,6 +50,7 @@ git clone git@git.systm.com:spo-gitlab/project.git
 git clone https://token name you picked:the personal access token@gitlab.umich.edu/user or project/repo name     <--by usnig tockenname:acesstoken@cloneurl
 git clone -b release git@git.systm.com:spo-gitlab/project.git
 git branch -a, git checkout feature/3-8-69/OC-299
+git checkout -b dev     <-- to create a new branch from source branch in local
 git add <--our files   git reset HEAD .   to unstage
 git commit -m "prepare cookbook for tomcat installation"
 git commit -a --author="Author" --message="Issue title #id"
