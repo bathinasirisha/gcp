@@ -6,8 +6,8 @@ git config --global user.email "bathina.pullarao@gmail.com"
 git config --global credential.helper store
 echo "https://username:yourtoken@github.com" > ~/.git-credentials
 
-git clone git@git
-cd gcm-uat
+git clone git@git   
+cd sirirepo
 git checkout branchname
 #git switch -c main
 touch README.md
@@ -15,6 +15,9 @@ git add README.md
 git restore --staged <file>..." to unstage
 git commit -m "add README"
 git push -u origin branchname
+git log
+git revert commitid
+git push             <--rise pullrequest
 
 
 
