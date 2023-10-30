@@ -1,3 +1,5 @@
+ssh-keygen                                <-- to create a keypair(pub and private keys)
+ssh-copy-id -i ~/.ssh/mykey user@host     <-- to copy keys in new server
 sudo useradd newuser        <-- to create user
 sudo passwd newuser         <-- to assign passowrd for new user
 netstat -tulpn              <-- tcp udp listening port numbers
