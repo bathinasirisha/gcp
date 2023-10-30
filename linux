@@ -1,3 +1,4 @@
+sudo apt install net-tools
 telnet 192.168.16.2 443     <--to check the port is open or not in remort servers
 find / -type f -name        <--to serach for the file in /
 rm -rf /var/lib/rpm/__db.[0-9][0-9]*   <-- delets __db.anysinglenumanysinglenum*
